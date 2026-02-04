@@ -1,0 +1,32 @@
+{
+    "name": "terraform-aws-module-template",
+    "version": "0.0.0",
+    "description": "A custom Terraform module GitHub template repository to manage AWS resource with Semantic Release support.",
+    "license": "MIT",
+    "scripts": {
+        "release": "semantic-release"
+    },
+    "devDependencies": {
+        "@semantic-release/changelog": "^6.0.1",
+        "@semantic-release/commit-analyzer": "^13.0.1",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^12.0.2",
+        "@semantic-release/release-notes-generator": "^14.1.0",
+        "conventional-changelog-conventionalcommits": "^9.1.0",
+        "semantic-release": "^25.0.2"
+    },
+    "main": "index.js",
+    "directories": {
+        "example": "examples"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template.git"
+    },
+    "keywords": [],
+    "author": "",
+    "bugs": {
+        "url": "https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template/issues"
+    },
+    "homepage": "https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template#readme"
+}

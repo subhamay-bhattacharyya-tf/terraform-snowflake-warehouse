@@ -1,0 +1,33 @@
+# name: Terraform Build
+# run-name: Build run by ${{ github.actor }} on ${{ github.ref_name }}
+
+# on:
+#   push:
+#     branches:
+#       - 'feature/**'         # Triggers on any push to branches starting with 'feature/'
+#       - 'bug/**'             # Triggers on any push to branches starting with 'bug/'
+#     paths-ignore:
+#       - 'README.md'          # Ignore workflow if only README.md is changed
+#       - '.github/**'         # Ignore workflow if only files in .github directory are changed
+#       - 'CODEOWNERS'         # Ignore workflow if only CODEOWNERS file is changed
+#       - 'LICENSE'            # Ignore workflow if only LICENSE file is changed
+#       - 'VERSION'            # Ignore workflow if only VERSION file is changed
+#       - 'CHANGELOG.md'       # Ignore workflow if only CHANGELOG.md file is changed
+#       - 'CODE_OF_CONDUCT.md' # Ignore workflow if only CODE_OF_CONDUCT.md file is changed
+#       - 'CONTRIBUTING.md'    # Ignore workflow if only CONTRIBUTING.md file is changed
+#   workflow_dispatch:
+
+# permissions:
+#   contents: read
+#   id-token: write
+
+# jobs:
+#   cloudformation-ci:
+#     name: CI
+#     uses: subhamay-bhattacharyya-gha/cfn-tf-module-wf/.github/workflows/ci.yaml@feature/SB-0001-initial-release
+#     with:
+#       # cfn-template-file: root-stack-template.yaml
+#     #   cfn-params-file: ./cfn/params/cfn-parameters.json
+#       environment: "ci"
+#     secrets:
+#       aws-role-arn: ${{ secrets.AWS_ROLE_ARN }}

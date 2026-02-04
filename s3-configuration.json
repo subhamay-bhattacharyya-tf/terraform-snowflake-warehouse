@@ -1,0 +1,145 @@
+{
+    "bucket-base-name": "my-bucket-name-my-bucket-name",
+    "acl": "private",
+    "versioning": false,
+    "encryption": {
+        "enabled": true,
+        "type": "SSE-KMS",
+        "key_arn": "arn:aws:kms:us-east-1:637423502513:key/494509e4-3bc5-44b8-9c4d-12449900d395",
+        "bucket_key_enabled": false
+    },
+    "intelligent_tiering_configs": [
+        {
+            "name": "intelligent-tiering-config-1",
+            "enabled": true,
+            "prefix": "prefix1/",
+            "tags": [
+                {
+                    "key": "tag1",
+                    "value": "value1"
+                },
+                {
+                    "key": "tag2",
+                    "value": "value2"
+                }
+            ],
+            "tierings": [
+                {
+                    "days": 90,
+                    "access_tier": "ARCHIVE_ACCESS"
+                },
+                {
+                    "days": 180,
+                    "access_tier": "DEEP_ARCHIVE_ACCESS"
+                }
+            ]
+        },
+        {
+            "name": "intelligent-tiering-config-2",
+            "enabled": true,
+            "prefix": "prefix2/",
+            "tags": [
+                {
+                    "key": "tag3",
+                    "value": "value3"
+                }
+            ],
+            "tierings": [
+                {
+                    "days": 120,
+                    "access_tier": "ARCHIVE_ACCESS"
+                },
+                {
+                    "days": 270,
+                    "access_tier": "DEEP_ARCHIVE_ACCESS"
+                }
+            ]
+        }
+    ],
+    "logging": {
+        "enabled": true,
+        "target_bucket": "subhamay-github-images-devl-us-east-1",
+        "target_prefix": "logs/"
+    },
+    "lifecycle_rules": [
+        {
+            "id": "log-cleanup",
+            "enabled": true,
+            "prefix": "logs/",
+            "transition": [
+                {
+                    "days": 30,
+                    "storage_class": "STANDARD_IA"
+                },
+                {
+                    "days": 90,
+                    "storage_class": "GLACIER"
+                },
+                {
+                    "days": 180,
+                    "storage_class": "DEEP_ARCHIVE"
+                }
+            ],
+            "expiration": {
+                "days": 365
+            }
+        },
+        {
+            "id": "archive-old-data",
+            "enabled": true,
+            "prefix": "archive/",
+            "transition": [
+                {
+                    "days": 60,
+                    "storage_class": "GLACIER"
+                }
+            ],
+            "expiration": {
+                "days": 730
+            }
+        },
+        {
+            "id": "temp-files-cleanup",
+            "enabled": true,
+            "prefix": "temp/",
+            "transition": [],
+            "expiration": {
+                "days": 7
+            }
+        }
+    ],
+    "tags": {
+        "Environment": "devl",
+        "Project": "devops"
+    },
+    "block_public_access": false,
+    "force_destroy": false,
+    "cors_rules": [
+        {
+            "allowed_headers": [
+                "*"
+            ],
+            "allowed_methods": [
+                "GET",
+                "PUT"
+            ],
+            "allowed_origins": [
+                "*"
+            ],
+            "expose_headers": [
+                "ETag"
+            ],
+            "max_age_seconds": 3000
+        }
+    ],
+    "policy": {
+        "effect": "Allow",
+        "principal": "*",
+        "actions": [
+            "s3:GetObject"
+        ],
+        "resources": [
+            "arn:aws:s3:::my-custom-s3-bucket/*"
+        ]
+    }
+}
