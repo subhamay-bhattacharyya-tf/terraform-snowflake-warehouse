@@ -1,113 +1,111 @@
-# terraform-docs
+# Terraform Snowflake Module - Warehouse
 
-[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
+![Release](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/actions/workflows/ci.yaml/badge.svg)&nbsp;![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?logo=snowflake&logoColor=white)&nbsp;![Commit Activity](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![File Count](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Top Language](https://img.shields.io/github/languages/top/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/73bb06aedb3721ff9a98cfe96f71647a/raw/terraform-snowflake-warehouse.json?)
 
-![terraform-docs-teaser](./images/terraform-docs-teaser.png)
+A Terraform module for creating and managing multiple Snowflake warehouses using a map of configuration objects.
 
-## What is terraform-docs
+## Features
 
-A utility to generate documentation from Terraform modules in various output formats.
+- Map-based configuration for creating multiple warehouses
+- Built-in input validation with descriptive error messages
+- Sensible defaults for optional properties
+- Outputs keyed by warehouse identifier for easy reference
 
-## Documentation
+## Usage
 
-- **Users**
-  - Read the [User Guide] to learn how to use terraform-docs
-  - Read the [Formats Guide] to learn about different output formats of terraform-docs
-  - Refer to [Config File Reference] for all the available configuration options
-- **Developers**
-  - Read [Contributing Guide] before submitting a pull request
+```hcl
+locals {
+  warehouses = {
+    "adhoc_wh" = {
+      name                      = "SN_TEST_ADHOC_WH"
+      warehouse_size            = "X-SMALL"
+      warehouse_type            = "STANDARD"
+      auto_resume               = true
+      auto_suspend              = 60
+      initially_suspended       = true
+      min_cluster_count         = 1
+      max_cluster_count         = 1
+      scaling_policy            = "STANDARD"
+      enable_query_acceleration = false
+      comment                   = "Development and sandbox warehouse"
+    }
+    "transform_wh" = {
+      name                      = "SN_TEST_TRANSFORM_WH"
+      warehouse_size            = "MEDIUM"
+      warehouse_type            = "STANDARD"
+      auto_resume               = true
+      auto_suspend              = 300
+      initially_suspended       = true
+      min_cluster_count         = 1
+      max_cluster_count         = 3
+      scaling_policy            = "STANDARD"
+      enable_query_acceleration = true
+      comment                   = "ETL/ELT warehouse for transformations"
+    }
+  }
+}
 
-Visit [our website] for all documentation.
+module "warehouses" {
+  source = "path/to/modules/snowflake-warehouse"
 
-## Installation
-
-The latest version can be installed using `go get`:
-
-```bash
-GO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.12.0
+  warehouse_configs = local.warehouses
+}
 ```
 
-**NOTE:** to download any version **before** `v0.9.1` (inclusive) you need to use to
-old module namespace (`segmentio`):
+## Requirements
 
-```bash
-# only for v0.9.1 and before
-GO111MODULE="on" go get github.com/segmentio/terraform-docs@v0.9.1
-```
+| Name | Version |
+|------|---------|
+| terraform | >= 1.3.0 |
+| snowflake | >= 0.87.0 |
 
-**NOTE:** please use the latest go to do this, we use 1.16.0 but ideally go 1.15 or greater.
+## Inputs
 
-This will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
-`terraform-docs: command not found` after installation then you may need to either add
-that directory to your `$PATH` as shown [here] or do a manual installation by cloning
-the repo and run `make build` from the repository which will put `terraform-docs` in:
+| Name | Description | Type | Required |
+|------|-------------|------|----------|
+| warehouse_configs | Map of configuration objects for Snowflake warehouses | map(object) | no |
 
-```bash
-$(go env GOPATH)/src/github.com/terraform-docs/terraform-docs/bin/$(uname | tr '[:upper:]' '[:lower:]')-amd64/terraform-docs
-```
+### warehouse_configs Object Properties
 
-Stable binaries are also available on the [releases] page. To install, download the
-binary for your platform from "Assets" and place this into your `$PATH`:
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| name | string | - | Warehouse identifier (required) |
+| warehouse_size | string | "X-SMALL" | Size of the warehouse |
+| warehouse_type | string | "STANDARD" | Type of warehouse (STANDARD) |
+| auto_resume | bool | true | Auto-resume when queries are submitted |
+| auto_suspend | number | 60 | Seconds of inactivity before auto-suspend |
+| initially_suspended | bool | true | Start in suspended state |
+| min_cluster_count | number | 1 | Minimum number of clusters |
+| max_cluster_count | number | 1 | Maximum number of clusters |
+| scaling_policy | string | "STANDARD" | Scaling policy (STANDARD, ECONOMY) |
+| enable_query_acceleration | bool | false | Enable query acceleration |
+| comment | string | null | Description of the warehouse |
 
-```bash
-curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.12.0/terraform-docs-v0.12.0-$(uname)-amd64.tar.gz
-tar -xzf terraform-docs.tar.gz
-chmod +x terraform-docs
-mv terraform-docs /some-dir-in-your-PATH/terraform-docs
-```
+### Valid Warehouse Sizes
 
-**NOTE:** Windows releases are in `ZIP` format.
+X-SMALL, SMALL, MEDIUM, LARGE
 
-If you are a Mac OS X user, you can use [Homebrew]:
+## Outputs
 
-```bash
-brew install terraform-docs
-```
+| Name | Description |
+|------|-------------|
+| warehouse_names | Map of warehouse names keyed by identifier |
+| warehouse_fully_qualified_names | Map of fully qualified warehouse names |
+| warehouse_sizes | Map of warehouse sizes |
+| warehouse_states | Map of warehouse states (STARTED or SUSPENDED) |
+| warehouses | All warehouse resources |
 
-or
+## Validation
 
-```bash
-brew install terraform-docs/tap/terraform-docs
-```
+The module validates inputs and provides descriptive error messages for:
 
-Windows users can install using [Scoop]:
-
-```bash
-scoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
-scoop install terraform-docs
-```
-
-or [Chocolatey]:
-
-```bash
-choco install terraform-docs
-```
-
-Alternatively you also can run `terraform-docs` as a container:
-
-```bash
-docker run quay.io/terraform-docs/terraform-docs:0.12.0
-```
-
-**NOTE:** Docker tag `latest` refers to _latest_ stable released version and `edge`
-refers to HEAD of `master` at any given point in time.
-
-## Community
-
-- Discuss terraform-docs on [Slack]
+- Empty warehouse name
+- Invalid warehouse size
+- Invalid warehouse type
+- Invalid scaling policy
+- Negative auto_suspend value
+- min_cluster_count exceeding max_cluster_count
 
 ## License
 
-MIT License - Copyright (c) 2021 The terraform-docs Authors.
-
-[User Guide]: ./docs/user-guide/introduction.md
-[Formats Guide]: ./docs/reference/terraform-docs.md
-[Config File Reference]: ./docs/user-guide/configuration.md
-[Contributing Guide]: CONTRIBUTING.md
-[our website]: https://terraform-docs.io/
-[here]: https://golang.org/doc/code.html#GOPATH
-[releases]: https://github.com/terraform-docs/terraform-docs/releases
-[Homebrew]: https://brew.sh
-[Scoop]: https://scoop.sh/
-[Chocolatey]: https://www.chocolatey.org
-[Slack]: https://slack.terraform-docs.io/
+MIT License - See [LICENSE](LICENSE) for details.

@@ -1,7 +1,7 @@
 {
-    "name": "terraform-aws-module-template",
+    "name": "terraform-snowflake-warehouse",
     "version": "0.0.0",
-    "description": "A custom Terraform module GitHub template repository to manage AWS resource with Semantic Release support.",
+    "description": "Terraform module for creating and managing Snowflake warehouses with Semantic Release support.",
     "license": "MIT",
     "scripts": {
         "release": "semantic-release"
@@ -15,18 +15,21 @@
         "conventional-changelog-conventionalcommits": "^9.1.0",
         "semantic-release": "^25.0.3"
     },
-    "main": "index.js",
     "directories": {
         "example": "examples"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template.git"
+        "url": "git+https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse.git"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "terraform",
+        "snowflake",
+        "warehouse",
+        "infrastructure-as-code"
+    ],
     "bugs": {
-        "url": "https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template/issues"
+        "url": "https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/issues"
     },
-    "homepage": "https://github.com/subhamay-bhattacharyya-tf/terraform-aws-module-template#readme"
+    "homepage": "https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse#readme"
 }
