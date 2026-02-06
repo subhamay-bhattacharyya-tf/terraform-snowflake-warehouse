@@ -3,11 +3,13 @@
 ### 📚 Documentation
 
 - Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 
 - *(testing)* Migrate from Jest to Terratest and restructure examples
 - *(github-actions)* Migrate authentication to key-pair and remove property tests
+- *(github-actions)* Enhance Terratest output visibility and remove conditional gate
 ## [1.0.0] - 2026-02-04
 
 ### 🚀 Features
