@@ -7,9 +7,11 @@
 ### 🚜 Refactor
 
 - *(test)* Migrate to gosnowflake config builder for JWT authentication
+- *(test)* Improve warehouse property fetching and remove extra blank line
 
 ### 📚 Documentation
 
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
