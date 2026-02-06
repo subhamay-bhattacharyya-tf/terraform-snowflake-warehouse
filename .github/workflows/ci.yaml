@@ -118,6 +118,7 @@ jobs:
       - name: Run Terratest - Single Warehouse
         id: single-warehouse-test
         run: |
+          set -o pipefail
           go test -v -timeout 30m -run TestSingleWarehouse 2>&1 | tee single_warehouse_output.txt
           echo "## Single Warehouse Test Results" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
@@ -134,6 +135,7 @@ jobs:
       - name: Run Terratest - Multiple Warehouses
         id: multiple-warehouses-test
         run: |
+          set -o pipefail
           go test -v -timeout 30m -run TestMultipleWarehouses 2>&1 | tee multiple_warehouses_output.txt
           echo "## Multiple Warehouses Test Results" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
