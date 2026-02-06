@@ -85,30 +85,63 @@ func warehouseExists(t *testing.T, db *sql.DB, warehouseName string) bool {
 func fetchWarehouseProps(t *testing.T, db *sql.DB, warehouseName string) WarehouseProps {
 	t.Helper()
 
-	show := fmt.Sprintf("SHOW WAREHOUSES LIKE '%s';", escapeLike(warehouseName))
+	// SHOW WAREHOUSES returns columns in a specific order. We need to scan all columns
+	// to get name (col 0), size (col 3), and comment (col 10 in newer versions).
+	// Using a simpler approach: query rows and scan by column name using rows.Columns()
+	q := fmt.Sprintf("SHOW WAREHOUSES LIKE '%s';", escapeLike(warehouseName))
+	rows, err := db.Query(q)
+	require.NoError(t, err)
+	defer func() { _ = rows.Close() }()
 
-	var queryID string
-	err := db.QueryRow(show + " SELECT LAST_QUERY_ID();").Scan(&queryID)
+	cols, err := rows.Columns()
 	require.NoError(t, err)
 
-	q := fmt.Sprintf(`
-		SELECT
-			"name"   AS name,
-			"size"   AS size,
-			"comment" AS comment
-		FROM TABLE(RESULT_SCAN('%s'))
-		LIMIT 1;
-	`, queryID)
+	// Find column indices for name, size, comment
+	nameIdx, sizeIdx, commentIdx := -1, -1, -1
+	for i, col := range cols {
+		switch col {
+		case "name":
+			nameIdx = i
+		case "size":
+			sizeIdx = i
+		case "comment":
+			commentIdx = i
+		}
+	}
+	require.NotEqual(t, -1, nameIdx, "name column not found in SHOW WAREHOUSES output")
+	require.NotEqual(t, -1, sizeIdx, "size column not found in SHOW WAREHOUSES output")
+	require.NotEqual(t, -1, commentIdx, "comment column not found in SHOW WAREHOUSES output")
 
-	var name, size, comment sql.NullString
-	err = db.QueryRow(q).Scan(&name, &size, &comment)
+	require.True(t, rows.Next(), "No warehouse found matching %s", warehouseName)
+
+	// Create slice to hold all column values
+	values := make([]interface{}, len(cols))
+	valuePtrs := make([]interface{}, len(cols))
+	for i := range values {
+		valuePtrs[i] = &values[i]
+	}
+
+	err = rows.Scan(valuePtrs...)
 	require.NoError(t, err)
 
-	require.True(t, name.Valid, "Warehouse name not returned from SHOW WAREHOUSES")
+	// Extract the values we need
+	getName := func(v interface{}) string {
+		if v == nil {
+			return ""
+		}
+		if s, ok := v.(string); ok {
+			return s
+		}
+		if b, ok := v.([]byte); ok {
+			return string(b)
+		}
+		return fmt.Sprintf("%v", v)
+	}
+
 	return WarehouseProps{
-		Name:    name.String,
-		Size:    size.String,
-		Comment: comment.String,
+		Name:    getName(values[nameIdx]),
+		Size:    getName(values[sizeIdx]),
+		Comment: getName(values[commentIdx]),
 	}
 }
 
