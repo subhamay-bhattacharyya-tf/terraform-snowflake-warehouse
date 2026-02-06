@@ -1,3 +1,5 @@
+# Snowflake Warehouse Resource
+# Creates one or more warehouses based on the warehouse_configs map
 resource "snowflake_warehouse" "this" {
   for_each = var.warehouse_configs
 

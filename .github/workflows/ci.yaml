@@ -97,7 +97,8 @@ jobs:
     strategy:
       matrix:
         example:
-          - examples/snowflake-warehouse
+          - examples/basic
+          - examples/multiple-warehouses
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -114,6 +115,55 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
         working-directory: ${{ matrix.example }}
+
+  # ============================================================================
+  # Terratest Integration Tests
+  # ============================================================================
+  terratest:
+    name: Terratest
+    runs-on: ubuntu-latest
+    needs: [property-tests, examples-validate]
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    env:
+      TF_VERSION: ${{ vars.TERRAFORM_VERSION || '1.3.0' }}
+      GO_VERSION: ${{ vars.GO_VERSION || '1.21' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: test/go.sum
+
+      - name: Download Go Dependencies
+        run: go mod download
+        working-directory: test
+
+      - name: Run Terratest - Single Warehouse
+        run: go test -v -timeout 30m -run TestSingleWarehouse
+        working-directory: test
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+
+      - name: Run Terratest - Multiple Warehouses
+        run: go test -v -timeout 30m -run TestMultipleWarehouses
+        working-directory: test
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
 
   # ============================================================================
   # Generate Change Log
@@ -156,7 +206,7 @@ jobs:
   semantic-release:
     name: Semantic Release
     runs-on: ubuntu-latest
-    needs: [property-tests, examples-validate]
+    needs: [property-tests, examples-validate, terratest]
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: write

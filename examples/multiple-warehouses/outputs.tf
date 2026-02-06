@@ -17,3 +17,8 @@ output "warehouse_states" {
   description = "The states of the warehouses (STARTED or SUSPENDED)"
   value       = module.warehouses.warehouse_states
 }
+
+output "warehouses" {
+  description = "All warehouse resources"
+  value       = module.warehouses.warehouses
+}

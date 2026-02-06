@@ -1,9 +1,9 @@
-# Example: Single Snowflake Warehouse
+# Example: Multiple Snowflake Warehouses
 #
 # This example demonstrates how to use the snowflake-warehouse module
-# to create a single Snowflake warehouse.
+# to create multiple Snowflake warehouses using a map of configurations.
 
-module "warehouse" {
+module "warehouses" {
   source = "../../modules/snowflake-warehouse"
 
   warehouse_configs = var.warehouse_configs
