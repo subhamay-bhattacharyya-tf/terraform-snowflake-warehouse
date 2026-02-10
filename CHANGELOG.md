@@ -5,9 +5,11 @@
 - [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
 - [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
 - [**breaking**] Upgrade Snowflake provider to >= 0.99.0
+- [**breaking**] Update Snowflake provider source to snowflakedb/snowflake
 
 ### 📚 Documentation
 
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 ## [1.0.1] - 2026-02-06
