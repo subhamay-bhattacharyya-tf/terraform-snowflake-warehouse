@@ -3,6 +3,11 @@
 ### 🚀 Features
 
 - [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
+- [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
+
+### 📚 Documentation
+
+- Update CHANGELOG.md [skip ci]
 ## [1.0.1] - 2026-02-06
 
 ### 🐛 Bug Fixes
