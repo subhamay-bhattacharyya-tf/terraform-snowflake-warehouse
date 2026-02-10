@@ -1,14 +1,18 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## [1.0.1](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/compare/v1.0.0...v1.0.1) (2026-02-06)
-
-### Bug Fixes
-
-* **snowflake:** update JWT authenticator to SNOWFLAKE_JWT and remove extra blank line ([1069d20](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/commit/1069d20cb9aa25f30eb69d770b3e7fc406194f44))
-
 ## [unreleased]
+
+### 🚀 Features
+
+- [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
+- [**breaking**] Update Snowflake provider to Snowflake-Labs/snowflake
+- [**breaking**] Upgrade Snowflake provider to >= 0.99.0
+- [**breaking**] Update Snowflake provider source to snowflakedb/snowflake
+
+### 📚 Documentation
+
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+## [1.0.1] - 2026-02-06
 
 ### 🐛 Bug Fixes
 
@@ -21,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
@@ -41,6 +46,7 @@ All notable changes to this project will be documented in this file.
 - *(test)* Update Go dependencies and add go.sum
 - *(testing)* Migrate to key-pair authentication and add go mod tidy
 - *(github-actions)* Add pipefail option to Terratest commands and update Snowflake provider source
+- *(release)* Version 1.0.1 [skip ci]
 ## [1.0.0] - 2026-02-04
 
 ### 🚀 Features
