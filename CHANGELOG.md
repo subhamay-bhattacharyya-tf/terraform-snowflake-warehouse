@@ -3,6 +3,14 @@
 ### 🚀 Features
 
 - Refactor repository to single module layout
+
+### 🐛 Bug Fixes
+
+- Standardize Terraform file headers and comments
+
+### 📚 Documentation
+
+- Update CHANGELOG.md [skip ci]
 ## [2.0.0] - 2026-02-10
 
 ### 🚀 Features
