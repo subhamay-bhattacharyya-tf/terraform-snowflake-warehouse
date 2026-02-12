@@ -50,3 +50,4 @@ node_modules/
 ## Ignore log files
 gh-log.txt
 .DS_Store
+utils/*
