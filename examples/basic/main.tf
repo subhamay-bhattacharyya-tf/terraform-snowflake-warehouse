@@ -4,7 +4,7 @@
 # to create a single Snowflake warehouse.
 
 module "warehouse" {
-  source = "../../modules/snowflake-warehouse"
+  source = "../.."
 
   warehouse_configs = var.warehouse_configs
 }

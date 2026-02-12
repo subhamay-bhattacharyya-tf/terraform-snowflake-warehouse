@@ -4,7 +4,7 @@
 # to create multiple Snowflake warehouses using a map of configurations.
 
 module "warehouses" {
-  source = "../../modules/snowflake-warehouse"
+  source = "../.."
 
   warehouse_configs = var.warehouse_configs
 }

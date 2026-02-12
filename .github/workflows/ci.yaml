@@ -8,11 +8,15 @@ on:
       - 'feature/**'
       - 'bug/**'
     paths:
-      - modules/**
+      - '*.tf'
+      - 'examples/**'
+      - 'test/**'
   pull_request:
     branches: [main]
     paths:
-      - modules/**
+      - '*.tf'
+      - 'examples/**'
+      - 'test/**'
   workflow_dispatch:
 
 permissions:
@@ -27,10 +31,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_VERSION: ${{ vars.TERRAFORM_VERSION || '1.3.0' }}
-    strategy:
-      matrix:
-        module:
-          - modules/snowflake-warehouse
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -42,15 +42,12 @@ jobs:
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
-        working-directory: ${{ matrix.module }}
 
       - name: Terraform Init
         run: terraform init -backend=false
-        working-directory: ${{ matrix.module }}
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ${{ matrix.module }}
 
   # ============================================================================
   # Validate Examples
@@ -212,8 +209,11 @@ jobs:
         uses: cycjimmy/semantic-release-action@v6
         with:
           extra_plugins: |
+            @semantic-release/commit-analyzer@13.0.0
+            @semantic-release/release-notes-generator@14.0.0
             @semantic-release/changelog@6.0.3
             @semantic-release/git@10.0.1
+            @semantic-release/github@11.0.0
             conventional-changelog-conventionalcommits@9.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
