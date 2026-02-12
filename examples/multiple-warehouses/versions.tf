@@ -1,10 +1,17 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Multiple Warehouses Example Versions
+# -----------------------------------------------------------------------------
+# Terraform and provider version constraints with Snowflake provider
+# configuration using key-pair authentication.
+# -----------------------------------------------------------------------------
+
 terraform {
   required_version = ">= 1.3.0"
 
   required_providers {
     snowflake = {
       source  = "snowflakedb/snowflake"
-      version = ">= 0.99.0"
+      version = ">= 0.87.0"
     }
   }
 }

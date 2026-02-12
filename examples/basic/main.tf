@@ -1,7 +1,9 @@
-# Example: Single Snowflake Warehouse
-#
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Basic Example
+# -----------------------------------------------------------------------------
 # This example demonstrates how to use the snowflake-warehouse module
 # to create a single Snowflake warehouse.
+# -----------------------------------------------------------------------------
 
 module "warehouse" {
   source = "../.."

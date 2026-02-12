@@ -1,3 +1,10 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Variables
+# -----------------------------------------------------------------------------
+# Input variables for the Snowflake warehouse module. Defines the warehouse
+# configuration map with validation rules for sizes, types, and policies.
+# -----------------------------------------------------------------------------
+
 variable "warehouse_configs" {
   description = "Map of configuration objects for Snowflake warehouses"
   type = map(object({

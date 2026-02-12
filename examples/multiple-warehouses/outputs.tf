@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Multiple Warehouses Example Outputs
+# -----------------------------------------------------------------------------
+# Output values for the multiple warehouses example.
+# -----------------------------------------------------------------------------
+
 output "warehouse_names" {
   description = "The names of the created warehouses"
   value       = module.warehouses.warehouse_names

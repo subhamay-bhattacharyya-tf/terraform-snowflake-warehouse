@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Basic Example Outputs
+# -----------------------------------------------------------------------------
+# Output values for the basic example.
+# -----------------------------------------------------------------------------
+
 output "warehouse_names" {
   description = "The names of the created warehouses"
   value       = module.warehouse.warehouse_names
