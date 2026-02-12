@@ -11,6 +11,12 @@
 ### 📚 Documentation
 
 - Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+
+### ⚙️ Miscellaneous Tasks
+
+- Update gitignore to exclude macOS system files
+- Update gitignore to exclude utils directory
 ## [2.0.0] - 2026-02-10
 
 ### 🚀 Features
