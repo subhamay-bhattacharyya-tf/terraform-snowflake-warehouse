@@ -1,6 +1,11 @@
-# Snowflake Warehouse Resource
-# Creates and manages one or more Snowflake warehouses based on the warehouse_configs map
-
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module
+# -----------------------------------------------------------------------------
+# This module creates and manages Snowflake warehouses using a map-based
+# configuration. It supports creating single or multiple warehouses with
+# configurable sizes, auto-suspend, and scaling policies in a single module
+# call.
+# -----------------------------------------------------------------------------
 
 resource "snowflake_warehouse" "this" {
   for_each = var.warehouse_configs

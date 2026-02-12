@@ -1,3 +1,10 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Multiple Warehouses Example Variables
+# -----------------------------------------------------------------------------
+# Input variables for the multiple warehouses example including warehouse
+# configurations and Snowflake authentication settings.
+# -----------------------------------------------------------------------------
+
 variable "warehouse_configs" {
   description = "Map of configuration objects for Snowflake warehouses"
   type = map(object({

@@ -1,3 +1,10 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Warehouse Module - Outputs
+# -----------------------------------------------------------------------------
+# Output values for the Snowflake warehouse module. Provides warehouse names,
+# fully qualified names, sizes, states, and full resource objects.
+# -----------------------------------------------------------------------------
+
 output "warehouse_names" {
   description = "The names of the created warehouses."
   value       = { for k, v in snowflake_warehouse.this : k => v.name }

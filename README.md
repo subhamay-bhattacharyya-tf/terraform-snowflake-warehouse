@@ -18,7 +18,7 @@ A Terraform module for creating and managing Snowflake warehouses using a map of
 
 ```hcl
 module "warehouse" {
-  source = "path/to/modules/snowflake-warehouse"
+  source = "github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse"
 
   warehouse_configs = {
     "my_warehouse" = {
@@ -86,7 +86,7 @@ locals {
 }
 
 module "warehouses" {
-  source = "path/to/modules/snowflake-warehouse"
+  source = "github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse"
 
   warehouse_configs = local.warehouses
 }
