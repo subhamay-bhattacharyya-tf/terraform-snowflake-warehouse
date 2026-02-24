@@ -19,6 +19,10 @@ variable "warehouse_configs" {
     scaling_policy            = optional(string, "STANDARD")
     enable_query_acceleration = optional(bool, false)
     comment                   = optional(string, null)
+    grants = optional(list(object({
+      role_name  = string
+      privileges = list(string)
+    })), [])
   }))
   default = {}
 
