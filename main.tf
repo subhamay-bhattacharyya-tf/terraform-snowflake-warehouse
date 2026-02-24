@@ -31,10 +31,10 @@ locals {
   warehouse_grants = merge([
     for wh_key, wh in var.warehouse_configs : {
       for grant in wh.grants : "${wh_key}_${grant.role_name}" => {
-        warehouse_key = wh_key
+        warehouse_key  = wh_key
         warehouse_name = wh.name
-        role_name     = grant.role_name
-        privileges    = grant.privileges
+        role_name      = grant.role_name
+        privileges     = grant.privileges
       }
     }
   ]...)
