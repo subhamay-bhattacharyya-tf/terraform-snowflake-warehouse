@@ -39,6 +39,7 @@ func TestMultipleWarehouses(t *testing.T) {
 			"scaling_policy":            "STANDARD",
 			"enable_query_acceleration": false,
 			"comment":                   "Terratest adhoc warehouse",
+			"grants":                    []interface{}{},
 		},
 		"load_wh": map[string]interface{}{
 			"name":                      wh2Name,
@@ -52,6 +53,7 @@ func TestMultipleWarehouses(t *testing.T) {
 			"scaling_policy":            "STANDARD",
 			"enable_query_acceleration": false,
 			"comment":                   "Terratest load warehouse",
+			"grants":                    []interface{}{},
 		},
 		"transform_wh": map[string]interface{}{
 			"name":                      wh3Name,
@@ -65,6 +67,7 @@ func TestMultipleWarehouses(t *testing.T) {
 			"scaling_policy":            "STANDARD",
 			"enable_query_acceleration": true,
 			"comment":                   "Terratest transform warehouse",
+			"grants":                    []interface{}{},
 		},
 	}
 

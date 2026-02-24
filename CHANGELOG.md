@@ -1,18 +1,13 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## [2.1.0](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/compare/v2.0.0...v2.1.0) (2026-02-12)
-
-### Features
-
-* refactor repository to single module layout ([28709db](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/commit/28709db2f85a2d3bb19bec382b9659173ac5c3f8))
-
-### Bug Fixes
-
-* standardize Terraform file headers and comments ([5b5a9d8](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/commit/5b5a9d8d782b1de0451e06f824f44fe70bbc0a1c))
-
 ## [unreleased]
+
+### 🚀 Features
+
+- [**breaking**] Refactor to single module layout and add warehouse grants support
+
+### 🎨 Styling
+
+- *(main.tf)* Align warehouse_grants variable assignments
+## [2.1.0] - 2026-02-12
 
 ### 🚀 Features
 
@@ -26,11 +21,13 @@ All notable changes to this project will be documented in this file.
 
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update gitignore to exclude macOS system files
 - Update gitignore to exclude utils directory
+- *(release)* Version 2.1.0 [skip ci]
 ## [2.0.0] - 2026-02-10
 
 ### 🚀 Features

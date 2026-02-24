@@ -36,6 +36,7 @@ func TestSingleWarehouse(t *testing.T) {
 			"scaling_policy":            "STANDARD",
 			"enable_query_acceleration": false,
 			"comment":                   "Terratest single warehouse test",
+			"grants":                    []interface{}{},
 		},
 	}
 

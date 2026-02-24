@@ -22,3 +22,31 @@ resource "snowflake_warehouse" "this" {
   enable_query_acceleration = each.value.enable_query_acceleration
   comment                   = each.value.comment
 }
+
+# -----------------------------------------------------------------------------
+# Warehouse Grants
+# -----------------------------------------------------------------------------
+# Flatten the grants from all warehouse configs into a map for for_each
+locals {
+  warehouse_grants = merge([
+    for wh_key, wh in var.warehouse_configs : {
+      for grant in wh.grants : "${wh_key}_${grant.role_name}" => {
+        warehouse_key  = wh_key
+        warehouse_name = wh.name
+        role_name      = grant.role_name
+        privileges     = grant.privileges
+      }
+    }
+  ]...)
+}
+
+resource "snowflake_grant_privileges_to_account_role" "warehouse" {
+  for_each = local.warehouse_grants
+
+  account_role_name = each.value.role_name
+  privileges        = each.value.privileges
+  on_account_object {
+    object_type = "WAREHOUSE"
+    object_name = snowflake_warehouse.this[each.value.warehouse_key].name
+  }
+}
