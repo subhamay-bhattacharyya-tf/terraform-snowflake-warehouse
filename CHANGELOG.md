@@ -1,3 +1,26 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [3.0.0](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/compare/v2.1.0...v3.0.0) (2026-02-24)
+
+### ⚠ BREAKING CHANGES
+
+* Module source path changed from modules/snowflake-warehouse to root level.
+Update module source from:
+  source = "github.com/.../terraform-snowflake-warehouse//modules/snowflake-warehouse"
+to:
+  source = "github.com/.../terraform-snowflake-warehouse"
+
+- Add grants configuration to warehouse_configs for role-based access control
+- Update provider to snowflakedb/snowflake >= 0.87.0
+- Add standardized header comments to all Terraform files
+- Fix fetchWarehouseProps multi-statement SQL issue in tests
+
+### Features
+
+* refactor to single module layout and add warehouse grants support ([d8d7397](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/commit/d8d739710314bd38c43515a1972b2fbcddca17be))
+
 ## [unreleased]
 
 ### 🚀 Features
